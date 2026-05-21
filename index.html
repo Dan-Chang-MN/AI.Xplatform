@@ -474,21 +474,21 @@
         <div class="section-label"><span>03 · 補助金額設定</span></div>
 
         <div class="field">
-          <label for="subsidy">申請補助金額 <span class="req">*</span></label>
+          <label for="subsidy">欲申請之補助金額 <span class="req">*</span></label>
           <div class="input-prefix-wrap">
             <span class="input-prefix">NT$</span>
             <input type="number" id="subsidy" name="subsidy" placeholder="0" min="0" step="1000">
           </div>
-          <span class="error-msg" id="subsidy-err">請輸入補助金額（需大於 0）</span>
+          <span class="error-msg" id="subsidy-err">請輸入欲申請之補助金額（需大於 0）</span>
         </div>
 
         <div class="field">
-          <label for="budget">學生理想預算 <span class="req">*</span></label>
+          <label for="budget">學生的理想預算(元/月) <span class="req">*</span></label>
           <div class="input-prefix-wrap">
             <span class="input-prefix">NT$</span>
             <input type="number" id="budget" name="budget" placeholder="0" min="0" step="1000">
           </div>
-          <span class="error-msg" id="budget-err">請輸入理想預算（需大於 0）</span>
+          <span class="error-msg" id="budget-err">請輸入學生的理想預算(元/月)（需大於 0）</span>
         </div>
 
         <div class="section-label"><span>04 · 說明會排程</span></div>
@@ -522,7 +522,7 @@
       <p class="success-body">感謝您的提交，補助申請通知已記錄並即將進入審核流程。</p>
       <div class="success-detail">
         <div class="dot"></div>
-        <p><strong>已收到補助申請通知</strong><br>24小時內審核評估完畢，另行通知學生及相關負責顧問。</p>
+        <p><strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。</p>
       </div>
       <button class="btn-reset" onclick="resetForm()">重新填寫申請</button>
     </div>
@@ -545,8 +545,8 @@
     phone:   { required: true,  pattern: /^[\d\s\-+()]{7,20}$/, msg: '請輸入有效的電話號碼' },
     email:   { required: true,  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, msg: '請輸入有效的電子郵件地址' },
     survey:  { required: true,  minLen: 10, msg: '請填寫評估問卷內容（至少 10 字）' },
-    subsidy: { required: true,  min: 1, msg: '請輸入補助金額（需大於 0）' },
-    budget:  { required: true,  min: 1, msg: '請輸入理想預算（需大於 0）' },
+    subsidy: { required: true,  min: 1, msg: '請輸入欲申請之補助金額（需大於 0）' },
+    budget:  { required: true,  min: 1, msg: '請輸入學生的理想預算（需大於 0）' },
     session: { required: true,  msg: '請選擇說明會時間' },
   };
 
