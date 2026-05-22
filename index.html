@@ -204,7 +204,7 @@
     padding: 12px 16px;
     outline: none;
     width: 100%;
-    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition), opacity var(--transition);
     -webkit-appearance: none;
   }
 
@@ -217,6 +217,13 @@
     border-color: var(--border-active);
     background: rgba(6,21,33,0.85);
     box-shadow: 0 0 0 3px var(--blue-glow), 0 0 20px rgba(13,156,240,0.06);
+  }
+
+  input:disabled {
+    opacity: 0.35;
+    background: #030a12;
+    cursor: not-allowed;
+    border-color: rgba(13,156,240,0.05);
   }
 
   input.error, textarea.error {
@@ -253,6 +260,42 @@
     filter: invert(0.6) sepia(1) saturate(5) hue-rotate(180deg);
     cursor: pointer;
     opacity: 0.7;
+  }
+
+  /* ── Checkbox ── */
+  .checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .checkbox-field input[type="checkbox"] {
+    width: 18px; height: 18px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+  }
+  .checkbox-field input[type="checkbox"]:checked {
+    background: var(--blue-core);
+    border-color: var(--blue-light);
+  }
+  .checkbox-field input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff; font-size: 0.75rem; font-weight: bold;
+  }
+  .checkbox-label {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    cursor: pointer;
   }
 
   /* ── Section Divider ── */
@@ -375,6 +418,19 @@
   .success-detail p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
   .success-detail strong { color: var(--green-light); }
 
+  /* 💡 用於高亮加急件的邊框樣式 */
+  .success-detail.priority-style {
+    background: rgba(255, 77, 109, 0.05);
+    border-color: rgba(255, 77, 109, 0.3);
+  }
+  .success-detail.priority-style .dot {
+    background: var(--error);
+    box-shadow: 0 0 8px var(--error);
+  }
+  .success-detail.priority-style strong {
+    color: var(--error);
+  }
+
   .btn-reset {
     background: transparent;
     border: 1px solid var(--border-subtle);
@@ -494,9 +550,14 @@
         <div class="section-label"><span>04 · 說明會排程</span></div>
 
         <div class="field full">
-          <label for="session">第二階段說明會時間 <span class="req">*</span></label>
+          <label for="session">第二階段說明會時間 <span class="req" id="session-req-star">*</span></label>
           <input type="datetime-local" id="session" name="session">
           <span class="error-msg" id="session-err">請選擇說明會時間</span>
+    
+          <div class="checkbox-field" onclick="toggleNoTimeOption(event)">
+            <input type="checkbox" id="no-time-checkbox" onchange="handleCheckboxChange(event)">
+            <label for="no-time-checkbox" class="checkbox-label">後面三天皆不便僅能安排今日</label>
+          </div>
         </div>
 
         <div class="section-label"><span>05 · 額外備註</span></div>
@@ -520,10 +581,12 @@
       <div class="success-icon-wrap">✅</div>
       <div class="success-title">申請已成功送出</div>
       <p class="success-body">感謝您的提交，補助申請通知已記錄並即將進入審核流程。</p>
-      <div class="success-detail">
+      
+      <div class="success-detail" id="info-box-wrapper">
         <div class="dot"></div>
-        <p><strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。</p>
+        <p id="success-notice-text"><strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。</p>
       </div>
+      
       <button class="btn-reset" onclick="resetForm()">重新填寫申請</button>
     </div>
 
@@ -538,6 +601,13 @@
 <script>
   const form = document.getElementById('apply-form');
   const successPanel = document.getElementById('success-panel');
+  const sessionInput = document.getElementById('session');
+  const noTimeCheckbox = document.getElementById('no-time-checkbox');
+  const sessionReqStar = document.getElementById('session-req-star');
+  
+  // 宣告動態文字與容器變數
+  const successNoticeText = document.getElementById('success-notice-text');
+  const infoBoxWrapper = document.getElementById('info-box-wrapper');
 
   /* ── Validation rules ── */
   const rules = {
@@ -551,6 +621,13 @@
   };
 
   function validateField(id) {
+    if (id === 'session' && noTimeCheckbox.checked) {
+      sessionInput.classList.remove('error');
+      const errEl = document.getElementById('session-err');
+      if (errEl) errEl.classList.remove('show');
+      return true;
+    }
+
     const rule = rules[id];
     if (!rule) return true;
     const el = document.getElementById(id);
@@ -573,6 +650,28 @@
     return valid;
   }
 
+  /* 智慧勾選切換邏輯 */
+  function handleCheckboxChange(e) {
+    if (noTimeCheckbox.checked) {
+      sessionInput.value = '';
+      sessionInput.disabled = true;
+      sessionInput.classList.remove('error');
+      const errEl = document.getElementById('session-err');
+      if (errEl) errEl.classList.remove('show');
+      sessionReqStar.style.display = 'none';
+    } else {
+      sessionInput.disabled = false;
+      sessionReqStar.style.display = 'inline';
+    }
+  }
+
+  function toggleNoTimeOption(event) {
+    if (event.target.tagName !== 'INPUT') {
+      noTimeCheckbox.checked = !noTimeCheckbox.checked;
+      handleCheckboxChange();
+    }
+  }
+
   /* Live validation on blur */
   Object.keys(rules).forEach(id => {
     const el = document.getElementById(id);
@@ -590,10 +689,20 @@
 
     const allValid = Object.keys(rules).map(id => validateField(id)).every(Boolean);
     if (!allValid) {
-      /* Scroll to first error */
       const firstErr = form.querySelector('.error');
       if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
+    }
+
+    /* 💡 動態抽換成功面板上的文字與高亮樣式 */
+    if (noTimeCheckbox.checked) {
+      // 勾選了後面三天皆不便 (加急件)
+      successNoticeText.innerHTML = `<strong>已收到補助申請通知</strong><br>此件將 30 分鐘內優先協助評估審核完成，並另行通知。`;
+      infoBoxWrapper.classList.add('priority-style'); // 加上加急高亮外框
+    } else {
+      // 未勾選 (常規件)
+      successNoticeText.innerHTML = `<strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。`;
+      infoBoxWrapper.classList.remove('priority-style');
     }
 
     /* Collect data */
@@ -601,7 +710,7 @@
       meta: {
         submittedAt: new Date().toISOString(),
         system: 'AI未來學院 AI-GO適才科技補助申請系統',
-        version: '2.0.0'
+        version: '2.1.0'
       },
       student: {
         name:    document.getElementById('name').value.trim(),
@@ -614,17 +723,15 @@
         idealBudget:   parseFloat(document.getElementById('budget').value) || 0,
       },
       schedule: {
-        sessionDatetime: document.getElementById('session').value,
+        sessionDatetime: noTimeCheckbox.checked ? "僅能安排今日（後面三天不便）" : sessionInput.value,
       },
       extra: {
         notes: document.getElementById('notes').value.trim() || null,
       }
     };
 
-    /* Console output */
     console.log('📦 補助申請資料 (API Payload):', JSON.stringify(payload, null, 2));
 
-    /* Transition: hide form, show success */
     form.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
     form.style.opacity = '0';
     form.style.transform = 'translateY(10px)';
@@ -639,6 +746,9 @@
   /* ── Reset ── */
   function resetForm() {
     form.reset();
+    sessionInput.disabled = false;
+    sessionReqStar.style.display = 'inline';
+    infoBoxWrapper.classList.remove('priority-style'); // 重設時移除加急樣式
     form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
     form.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
     form.style.display = '';
@@ -656,7 +766,7 @@
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  /* ── Page load stagger (cards, inputs) ── */
+  /* ── Page load stagger ── */
   window.addEventListener('DOMContentLoaded', () => {
     const fields = document.querySelectorAll('.field');
     fields.forEach((el, i) => {
