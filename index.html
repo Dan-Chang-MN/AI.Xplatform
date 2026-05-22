@@ -553,24 +553,38 @@
 
     setLoading(true);
 
-    fetch(GAS_URL, {
-      method: 'POST',
-      // GAS 不支援 application/json 的 preflight，改用 text/plain 繞過 CORS preflight
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
+    // ── 用 GET + URLSearchParams 呼叫 GAS（完全繞開 CORS preflight 問題）──
+    var params = new URLSearchParams({
+      action:  'submit',
+      name:    payload.name,
+      phone:   payload.phone,
+      email:   payload.email,
+      subsidy: payload.subsidy,
+      budget:  payload.budget,
+      session: payload.session,
+      notes:   payload.notes || ''
+    });
+
+    fetch(GAS_URL + '?' + params.toString(), { method: 'GET' })
     .then(function(res) {
-      if (!res.ok) throw new Error('HTTP 錯誤：' + res.status);
-      return res.json();
+      // GAS 會做 302 redirect，fetch 預設會 follow，最終拿到真實 JSON
+      return res.text();   // 先拿 text，再手動 parse，避免 content-type 不符導致 json() 爆炸
     })
-    .then(function(data) {
-      console.log('✅ GAS 回應：', data);
+    .then(function(text) {
+      console.log('✅ GAS 原始回應：', text);
+      var data;
+      try {
+        data = JSON.parse(text);
+      } catch(parseErr) {
+        throw new Error('回應格式錯誤，無法解析 JSON：' + text.substring(0, 100));
+      }
+
       setLoading(false);
 
       if (data.status === 'duplicate') {
-        showModal();
+        showModal();                      // 🔴 跳出重複申請警告，阻擋送出
       } else if (data.status === 'success') {
-        showSuccess();
+        showSuccess();                    // ✅ 顯示成功卡片
       } else {
         alert('發生錯誤：' + (data.message || '未知錯誤，請稍後再試。'));
       }
