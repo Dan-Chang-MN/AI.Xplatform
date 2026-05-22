@@ -18,19 +18,18 @@
     --green-core:     #0d7a5f;
     --green-light:    #1de0a8;
     --green-glow:     rgba(29,224,168,0.15);
-    --border-subtle: rgba(13,156,240,0.20);
-    --border-active: rgba(13,156,240,0.65);
+    --border-subtle:  rgba(13,156,240,0.20);
+    --border-active:  rgba(13,156,240,0.65);
     --text-primary:   #e8f4fd;
-    --text-secondary:#8ab4cc;
+    --text-secondary: #8ab4cc;
     --text-muted:     #3e6a85;
     --error:          #ff4d6d;
-    --success-bg:     #041f14;
+    --warning:        #f59e0b;
     --radius:         10px;
     --transition:     0.3s cubic-bezier(0.4,0,0.2,1);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -42,7 +41,6 @@
     position: relative;
   }
 
-  /* ── Background grid + orbs ── */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 0;
@@ -53,11 +51,7 @@
     pointer-events: none;
   }
 
-  .orb {
-    position: fixed; border-radius: 50%; filter: blur(100px);
-    pointer-events: none; z-index: 0; opacity: 0.5;
-    animation: orb-drift 18s ease-in-out infinite alternate;
-  }
+  .orb { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; opacity: 0.5; animation: orb-drift 18s ease-in-out infinite alternate; }
   .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(13,156,240,0.25), transparent 70%); top: -200px; right: -100px; }
   .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(13,122,95,0.2), transparent 70%); bottom: 10%; left: -150px; animation-delay: -9s; }
   .orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(29,224,168,0.12), transparent 70%); top: 40%; right: 15%; animation-delay: -5s; }
@@ -67,7 +61,6 @@
     to   { transform: translateY(40px) scale(1.1); }
   }
 
-  /* ── Wrapper ── */
   .page-wrapper {
     position: relative; z-index: 1;
     max-width: 860px; margin: 0 auto;
@@ -75,400 +68,197 @@
   }
 
   /* ── Hero ── */
-  .hero {
-    text-align: center;
-    padding: 72px 20px 56px;
-    animation: fade-up 0.9s ease both;
-  }
-
+  .hero { text-align: center; padding: 72px 20px 56px; animation: fade-up 0.9s ease both; }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(13,156,240,0.08);
-    border: 1px solid rgba(13,156,240,0.3);
-    border-radius: 100px;
-    padding: 6px 18px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    color: var(--blue-light);
-    margin-bottom: 28px;
-    text-transform: uppercase;
+    background: rgba(13,156,240,0.08); border: 1px solid rgba(13,156,240,0.3);
+    border-radius: 100px; padding: 6px 18px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.12em; color: var(--blue-light); margin-bottom: 28px; text-transform: uppercase;
   }
   .hero-badge::before {
-    content: '';
-    width: 7px; height: 7px;
-    background: var(--green-light);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--green-light);
+    content: ''; width: 7px; height: 7px; background: var(--green-light);
+    border-radius: 50%; box-shadow: 0 0 8px var(--green-light);
     animation: pulse-dot 2s ease-in-out infinite;
   }
-  @keyframes pulse-dot {
-    0%,100% { opacity:1; transform:scale(1); }
-    50%      { opacity:0.5; transform:scale(0.7); }
-  }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(0.7);} }
 
   .hero h1 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: clamp(2.1rem, 6vw, 3.4rem);
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    line-height: 1.1;
+    font-family: 'Rajdhani', sans-serif; font-size: clamp(2.1rem, 6vw, 3.4rem);
+    font-weight: 700; letter-spacing: 0.04em; line-height: 1.1;
     background: linear-gradient(135deg, #ffffff 0%, var(--blue-light) 50%, var(--green-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     margin-bottom: 16px;
   }
-
   .hero-sub {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    letter-spacing: 0.06em;
+    font-size: 1rem; color: var(--text-secondary); letter-spacing: 0.06em;
     display: flex; align-items: center; justify-content: center; gap: 12px;
   }
-  .hero-sub::before,.hero-sub::after {
-    content: '';
-    flex: 1; max-width: 60px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border-active));
-  }
+  .hero-sub::before,.hero-sub::after { content:''; flex:1; max-width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--border-active)); }
   .hero-sub::after { background: linear-gradient(90deg, var(--border-active), transparent); }
-
-  .hero-divider {
-    width: 120px; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--blue-core), var(--green-light), transparent);
-    margin: 30px auto 0;
-    border-radius: 2px;
-  }
+  .hero-divider { width:120px; height:2px; background:linear-gradient(90deg,transparent,var(--blue-core),var(--green-light),transparent); margin:30px auto 0; border-radius:2px; }
 
   /* ── Card ── */
   .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 18px;
-    padding: 44px 48px;
-    position: relative;
-    overflow: hidden;
+    background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 18px;
+    padding: 44px 48px; position: relative; overflow: hidden;
     box-shadow: 0 20px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
     animation: fade-up 0.9s 0.2s ease both;
   }
   .card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green-core), var(--blue-core), var(--green-light));
-    border-radius: 18px 18px 0 0;
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--green-core), var(--blue-core), var(--green-light));
+    border-radius:18px 18px 0 0;
   }
-
-  .card-header {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 36px;
-  }
-  .card-icon {
-    width: 46px; height: 46px;
-    background: linear-gradient(135deg, rgba(13,156,240,0.15), rgba(29,224,168,0.1));
-    border: 1px solid rgba(13,156,240,0.35);
-    border-radius: 12px;
-    display: grid; place-items: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-  .card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.25rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text-primary); }
-  .card-desc  { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; font-family: 'Share Tech Mono', monospace; }
+  .card-header { display:flex; align-items:center; gap:14px; margin-bottom:36px; }
+  .card-icon { width:46px; height:46px; background:linear-gradient(135deg,rgba(13,156,240,0.15),rgba(29,224,168,0.1)); border:1px solid rgba(13,156,240,0.35); border-radius:12px; display:grid; place-items:center; font-size:1.3rem; flex-shrink:0; }
+  .card-title { font-family:'Rajdhani',sans-serif; font-size:1.25rem; font-weight:600; letter-spacing:0.06em; color:var(--text-primary); }
+  .card-desc  { font-size:0.8rem; color:var(--text-muted); margin-top:2px; font-family:'Share Tech Mono',monospace; }
 
   /* ── Form Grid ── */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px 28px;
-  }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px 28px; }
+  .field { display:flex; flex-direction:column; gap:8px; }
+  .field.full { grid-column:1/-1; }
+  label { font-size:0.8rem; font-weight:500; letter-spacing:0.08em; color:var(--text-secondary); text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+  .req { color:var(--blue-core); font-size:0.9rem; }
 
-  .field { display: flex; flex-direction: column; gap: 8px; }
-  .field.full { grid-column: 1 / -1; }
-
-  label {
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    display: flex; align-items: center; gap: 6px;
+  input, textarea {
+    background:var(--bg-input); border:1px solid var(--border-subtle); border-radius:var(--radius);
+    color:var(--text-primary); font-family:'Noto Sans TC',sans-serif; font-size:0.92rem;
+    padding:12px 16px; outline:none; width:100%;
+    transition:border-color var(--transition), box-shadow var(--transition), background var(--transition), opacity var(--transition);
+    -webkit-appearance:none;
   }
-  .req { color: var(--blue-core); font-size: 0.9rem; }
+  input::placeholder, textarea::placeholder { color:var(--text-muted); font-size:0.84rem; }
+  input:focus, textarea:focus { border-color:var(--border-active); background:rgba(6,21,33,0.85); box-shadow:0 0 0 3px var(--blue-glow), 0 0 20px rgba(13,156,240,0.06); }
+  input:disabled { opacity:0.35; background:#030a12; cursor:not-allowed; border-color:rgba(13,156,240,0.05); }
+  input.error, textarea.error { border-color:var(--error); box-shadow:0 0 0 3px rgba(255,77,109,0.1); }
+  .error-msg { font-size:0.74rem; color:var(--error); display:none; font-family:'Share Tech Mono',monospace; }
+  .error-msg.show { display:block; animation:fade-up 0.2s ease; }
+  textarea { resize:vertical; min-height:100px; line-height:1.6; }
 
-  input, textarea, select {
-    background: var(--bg-input);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    color: var(--text-primary);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 0.92rem;
-    padding: 12px 16px;
-    outline: none;
-    width: 100%;
-    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition), opacity var(--transition);
-    -webkit-appearance: none;
-  }
+  .input-prefix-wrap { position:relative; }
+  .input-prefix-wrap input { padding-left:44px; }
+  .input-prefix { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-family:'Share Tech Mono',monospace; font-size:0.85rem; color:var(--blue-core); pointer-events:none; user-select:none; }
 
-  input::placeholder, textarea::placeholder {
-    color: var(--text-muted);
-    font-size: 0.84rem;
-  }
-
-  input:focus, textarea:focus {
-    border-color: var(--border-active);
-    background: rgba(6,21,33,0.85);
-    box-shadow: 0 0 0 3px var(--blue-glow), 0 0 20px rgba(13,156,240,0.06);
-  }
-
-  input:disabled {
-    opacity: 0.35;
-    background: #030a12;
-    cursor: not-allowed;
-    border-color: rgba(13,156,240,0.05);
-  }
-
-  input.error, textarea.error {
-    border-color: var(--error);
-    box-shadow: 0 0 0 3px rgba(255,77,109,0.1);
-  }
-
-  .error-msg {
-    font-size: 0.74rem;
-    color: var(--error);
-    display: none;
-    font-family: 'Share Tech Mono', monospace;
-  }
-  .error-msg.show { display: block; animation: fade-up 0.2s ease; }
-
-  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
-
-  /* Number inputs with prefix */
-  .input-prefix-wrap {
-    position: relative;
-  }
-  .input-prefix-wrap input { padding-left: 44px; }
-  .input-prefix {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--blue-core);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* Datetime */
-  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.6) sepia(1) saturate(5) hue-rotate(180deg);
-    cursor: pointer;
-    opacity: 0.7;
-  }
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter:invert(0.6) sepia(1) saturate(5) hue-rotate(180deg); cursor:pointer; opacity:0.7; }
 
   /* ── Checkbox ── */
-  .checkbox-field {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 6px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .checkbox-field input[type="checkbox"] {
-    width: 18px; height: 18px;
-    background: var(--bg-input);
-    border: 1px solid var(--border-subtle);
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    padding: 0;
-  }
-  .checkbox-field input[type="checkbox"]:checked {
-    background: var(--blue-core);
-    border-color: var(--blue-light);
-  }
-  .checkbox-field input[type="checkbox"]:checked::after {
-    content: '✓';
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff; font-size: 0.75rem; font-weight: bold;
-  }
-  .checkbox-label {
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-    text-transform: none;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-  }
+  .checkbox-field { display:flex; align-items:center; gap:10px; margin-top:6px; cursor:pointer; user-select:none; }
+  .checkbox-field input[type="checkbox"] { width:18px; height:18px; background:var(--bg-input); border:1px solid var(--border-subtle); border-radius:4px; cursor:pointer; position:relative; padding:0; }
+  .checkbox-field input[type="checkbox"]:checked { background:var(--blue-core); border-color:var(--blue-light); }
+  .checkbox-field input[type="checkbox"]:checked::after { content:'✓'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size:0.75rem; font-weight:bold; }
+  .checkbox-label { font-size:0.88rem; color:var(--text-secondary); text-transform:none; letter-spacing:0.02em; cursor:pointer; }
 
   /* ── Section Divider ── */
-  .section-label {
-    grid-column: 1 / -1;
-    display: flex; align-items: center; gap: 12px;
-    margin-top: 4px;
-  }
-  .section-label span {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    color: var(--green-light);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1; height: 1px;
-    background: linear-gradient(90deg, rgba(29,224,168,0.3), transparent);
-  }
+  .section-label { grid-column:1/-1; display:flex; align-items:center; gap:12px; margin-top:4px; }
+  .section-label span { font-family:'Share Tech Mono',monospace; font-size:0.7rem; letter-spacing:0.14em; color:var(--green-light); text-transform:uppercase; white-space:nowrap; }
+  .section-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(29,224,168,0.3),transparent); }
 
   /* ── Submit Button ── */
   .btn-submit {
-    grid-column: 1 / -1;
-    margin-top: 12px;
-    padding: 16px 32px;
-    border: none;
-    border-radius: var(--radius);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #0a72b8 0%, #0d9cf0 45%, #0d7a5f 100%);
-    color: #fff;
-    box-shadow: 0 6px 30px rgba(13,156,240,0.35), 0 2px 8px rgba(0,0,0,0.4);
-    transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+    grid-column:1/-1; margin-top:12px; padding:16px 32px; border:none; border-radius:var(--radius);
+    font-family:'Rajdhani',sans-serif; font-size:1.05rem; font-weight:700; letter-spacing:0.12em;
+    text-transform:uppercase; cursor:pointer; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, #0a72b8 0%, #0d9cf0 45%, #0d7a5f 100%);
+    color:#fff; box-shadow:0 6px 30px rgba(13,156,240,0.35), 0 2px 8px rgba(0,0,0,0.4);
+    transition:transform var(--transition), box-shadow var(--transition), filter var(--transition), opacity var(--transition);
   }
-  .btn-submit::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent 60%);
-    pointer-events: none;
-  }
-  .btn-submit::after {
-    content: '';
-    position: absolute; top: -50%; left: -60%;
-    width: 50%; height: 200%;
-    background: rgba(255,255,255,0.1);
-    transform: skewX(-20deg);
-    transition: left 0.55s ease;
-  }
-  .btn-submit:hover::after { left: 130%; }
-  .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(13,156,240,0.5), 0 4px 12px rgba(0,0,0,0.4);
-    filter: brightness(1.08);
-  }
-  .btn-submit:active { transform: translateY(0); }
+  .btn-submit::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent 60%); pointer-events:none; }
+  .btn-submit::after { content:''; position:absolute; top:-50%; left:-60%; width:50%; height:200%; background:rgba(255,255,255,0.1); transform:skewX(-20deg); transition:left 0.55s ease; }
+  .btn-submit:hover:not(:disabled)::after { left:130%; }
+  .btn-submit:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 40px rgba(13,156,240,0.5), 0 4px 12px rgba(0,0,0,0.4); filter:brightness(1.08); }
+  .btn-submit:active:not(:disabled) { transform:translateY(0); }
+  .btn-submit:disabled { opacity:0.55; cursor:not-allowed; filter:grayscale(0.3); }
+  .btn-inner { display:flex; align-items:center; justify-content:center; gap:10px; }
+  .btn-icon { font-size:1.1rem; }
 
-  .btn-inner { display: flex; align-items: center; justify-content: center; gap: 10px; }
-  .btn-icon { font-size: 1.1rem; }
+  /* ── Loading Spinner ── */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ── Success State ── */
-  #success-panel {
-    display: none;
-    text-align: center;
-    padding: 60px 32px;
-    animation: fade-up 0.7s ease both;
-  }
-
+  #success-panel { display:none; text-align:center; padding:60px 32px; animation:fade-up 0.7s ease both; }
   .success-icon-wrap {
-    width: 90px; height: 90px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(29,224,168,0.15), transparent 70%);
-    border: 2px solid rgba(29,224,168,0.4);
-    display: grid; place-items: center;
-    margin: 0 auto 28px;
-    font-size: 2.4rem;
-    box-shadow: 0 0 40px rgba(29,224,168,0.2);
-    animation: success-pop 0.5s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    width:90px; height:90px; border-radius:50%;
+    background:radial-gradient(circle, rgba(29,224,168,0.15), transparent 70%);
+    border:2px solid rgba(29,224,168,0.4); display:grid; place-items:center;
+    margin:0 auto 28px; font-size:2.4rem; box-shadow:0 0 40px rgba(29,224,168,0.2);
+    animation:success-pop 0.5s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
   }
+  @keyframes success-pop { from{transform:scale(0.4);opacity:0;} to{transform:scale(1);opacity:1;} }
+  .success-title { font-family:'Rajdhani',sans-serif; font-size:1.7rem; font-weight:700; letter-spacing:0.06em; color:var(--green-light); margin-bottom:14px; }
+  .success-body { font-size:0.95rem; color:var(--text-secondary); line-height:1.8; max-width:480px; margin:0 auto 32px; }
+  .success-detail { background:rgba(29,224,168,0.05); border:1px solid rgba(29,224,168,0.2); border-radius:var(--radius); padding:18px 24px; display:flex; align-items:center; gap:12px; max-width:460px; margin:0 auto 32px; text-align:left; }
+  .success-detail .dot { width:8px; height:8px; background:var(--green-light); border-radius:50%; flex-shrink:0; box-shadow:0 0 8px var(--green-light); }
+  .success-detail p { font-size:0.88rem; color:var(--text-secondary); line-height:1.6; }
+  .success-detail strong { color:var(--green-light); }
+  .success-detail.priority-style { background:rgba(255,77,109,0.05); border-color:rgba(255,77,109,0.3); }
+  .success-detail.priority-style .dot { background:var(--error); box-shadow:0 0 8px var(--error); }
+  .success-detail.priority-style strong { color:var(--error); }
 
-  @keyframes success-pop {
-    from { transform: scale(0.4); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
-  }
+  .btn-reset { background:transparent; border:1px solid var(--border-subtle); border-radius:var(--radius); color:var(--text-secondary); font-family:'Noto Sans TC',sans-serif; font-size:0.85rem; padding:10px 24px; cursor:pointer; transition:border-color var(--transition), color var(--transition); }
+  .btn-reset:hover { border-color:var(--blue-core); color:var(--blue-light); }
 
-  .success-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--green-light);
-    margin-bottom: 14px;
+  /* ── Custom Modal (防呆彈窗) ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+    animation: fade-in 0.25s ease;
   }
-  .success-body {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    max-width: 480px;
-    margin: 0 auto 32px;
-  }
+  .modal-overlay.show { display: flex; }
+  @keyframes fade-in { from{opacity:0;} to{opacity:1;} }
 
-  .success-detail {
-    background: rgba(29,224,168,0.05);
-    border: 1px solid rgba(29,224,168,0.2);
-    border-radius: var(--radius);
-    padding: 18px 24px;
-    display: flex; align-items: center; gap: 12px;
-    max-width: 460px;
-    margin: 0 auto 32px;
-    text-align: left;
+  .modal-box {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,77,109,0.35);
+    border-radius: 16px;
+    padding: 40px 36px;
+    max-width: 420px; width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 80px rgba(255,77,109,0.15), 0 0 0 1px rgba(255,77,109,0.1);
+    animation: modal-pop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+    position: relative;
   }
-  .success-detail .dot { width: 8px; height: 8px; background: var(--green-light); border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px var(--green-light); }
-  .success-detail p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
-  .success-detail strong { color: var(--green-light); }
+  .modal-box::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--error), rgba(255,77,109,0.3), var(--error)); border-radius:16px 16px 0 0; }
+  @keyframes modal-pop { from{transform:scale(0.85) translateY(20px);opacity:0;} to{transform:scale(1) translateY(0);opacity:1;} }
 
-  /* 💡 用於高亮加急件的邊框樣式 */
-  .success-detail.priority-style {
-    background: rgba(255, 77, 109, 0.05);
-    border-color: rgba(255, 77, 109, 0.3);
+  .modal-icon { font-size: 2.8rem; margin-bottom: 16px; }
+  .modal-title { font-family:'Rajdhani',sans-serif; font-size:1.4rem; font-weight:700; color:var(--error); letter-spacing:0.06em; margin-bottom:12px; }
+  .modal-msg { font-size:0.9rem; color:var(--text-secondary); line-height:1.7; margin-bottom:28px; }
+  .modal-btn {
+    background: linear-gradient(135deg, rgba(255,77,109,0.15), rgba(255,77,109,0.25));
+    border: 1px solid rgba(255,77,109,0.5);
+    border-radius: var(--radius); color: var(--error);
+    font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:600;
+    letter-spacing:0.1em; padding:11px 32px; cursor:pointer;
+    transition: background var(--transition), box-shadow var(--transition);
   }
-  .success-detail.priority-style .dot {
-    background: var(--error);
-    box-shadow: 0 0 8px var(--error);
-  }
-  .success-detail.priority-style strong {
-    color: var(--error);
-  }
-
-  .btn-reset {
-    background: transparent;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    color: var(--text-secondary);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 0.85rem;
-    padding: 10px 24px;
-    cursor: pointer;
-    transition: border-color var(--transition), color var(--transition);
-  }
-  .btn-reset:hover { border-color: var(--blue-core); color: var(--blue-light); }
+  .modal-btn:hover { background:linear-gradient(135deg,rgba(255,77,109,0.25),rgba(255,77,109,0.35)); box-shadow:0 0 20px rgba(255,77,109,0.2); }
 
   /* ── Footer ── */
-  .footer {
-    text-align: center;
-    margin-top: 40px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    animation: fade-up 0.9s 0.4s ease both;
-  }
+  .footer { text-align:center; margin-top:40px; font-family:'Share Tech Mono',monospace; font-size:0.68rem; color:var(--text-muted); letter-spacing:0.1em; animation:fade-up 0.9s 0.4s ease both; }
 
   /* ── Animations ── */
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fade-up { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
 
   /* ── RWD ── */
   @media (max-width: 640px) {
-    .card { padding: 28px 20px; }
-    .form-grid { grid-template-columns: 1fr; gap: 18px; }
-    .field.full { grid-column: 1; }
-    .btn-submit { grid-column: 1; }
-    .section-label { grid-column: 1; }
-    .hero { padding: 48px 10px 36px; }
+    .card { padding:28px 20px; }
+    .form-grid { grid-template-columns:1fr; gap:18px; }
+    .field.full, .btn-submit, .section-label { grid-column:1; }
+    .hero { padding:48px 10px 36px; }
+    .modal-box { padding:32px 24px; }
   }
 </style>
 </head>
@@ -477,6 +267,16 @@
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
+
+<!-- ── 防呆重複申請 Modal ── -->
+<div class="modal-overlay" id="dup-modal">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title">重複申請警告</div>
+    <p class="modal-msg">此學生已申請過補助，請勿重複申請。</p>
+    <button class="modal-btn" onclick="closeModal()">我知道了</button>
+  </div>
+</div>
 
 <div class="page-wrapper">
 
@@ -524,7 +324,7 @@
         <div class="field full">
           <label for="survey">學生評估問卷 <span class="req">*</span></label>
           <textarea id="survey" name="survey" placeholder="請填寫學生會議前提供的AI體質評估問卷" rows="5"></textarea>
-          <span class="error-msg" id="survey-err">請填寫評估問卷內容</span>
+          <span class="error-msg" id="survey-err">請填寫評估問卷內容（至少 10 字）</span>
         </div>
 
         <div class="section-label"><span>03 · 補助金額設定</span></div>
@@ -544,7 +344,7 @@
             <span class="input-prefix">NT$</span>
             <input type="number" id="budget" name="budget" placeholder="0" min="0" step="1000">
           </div>
-          <span class="error-msg" id="budget-err">請輸入學生的理想預算(元/月)（需大於 0）</span>
+          <span class="error-msg" id="budget-err">請輸入學生的理想預算（需大於 0）</span>
         </div>
 
         <div class="section-label"><span>04 · 說明會排程</span></div>
@@ -553,7 +353,6 @@
           <label for="session">第二階段說明會時間 <span class="req" id="session-req-star">*</span></label>
           <input type="datetime-local" id="session" name="session">
           <span class="error-msg" id="session-err">請選擇說明會時間</span>
-    
           <div class="checkbox-field" onclick="toggleNoTimeOption(event)">
             <input type="checkbox" id="no-time-checkbox" onchange="handleCheckboxChange(event)">
             <label for="no-time-checkbox" class="checkbox-label">後面三天皆不便僅能安排今日</label>
@@ -567,8 +366,8 @@
           <textarea id="notes" name="notes" placeholder="其他需要補充說明的資訊（選填）..." rows="4"></textarea>
         </div>
 
-        <button type="submit" class="btn-submit">
-          <span class="btn-inner">
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span class="btn-inner" id="btn-inner">
             <span class="btn-icon">🚀</span>
             送出申請
           </span>
@@ -581,82 +380,82 @@
       <div class="success-icon-wrap">✅</div>
       <div class="success-title">申請已成功送出</div>
       <p class="success-body">感謝您的提交，補助申請通知已記錄並即將進入審核流程。</p>
-      
       <div class="success-detail" id="info-box-wrapper">
         <div class="dot"></div>
         <p id="success-notice-text"><strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。</p>
       </div>
-      
       <button class="btn-reset" onclick="resetForm()">重新填寫申請</button>
     </div>
+
+  </div>
 
   <footer class="footer">
     <p>AI未來學院 · AI-GO適才科技 · 補助專用 · © 2026</p>
   </footer>
-   
-  </div>
 
 </div>
 
 <script>
-  const form = document.getElementById('apply-form');
-  const successPanel = document.getElementById('success-panel');
-  const sessionInput = document.getElementById('session');
-  const noTimeCheckbox = document.getElementById('no-time-checkbox');
-  const sessionReqStar = document.getElementById('session-req-star');
-  
-  // 宣告動態文字與容器變數
-  const successNoticeText = document.getElementById('success-notice-text');
-  const infoBoxWrapper = document.getElementById('info-box-wrapper');
+  // ============================================================
+  //  ▼▼▼ 請將下方網址替換成你佈署後的 GAS Web App URL ▼▼▼
+  // ============================================================
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbyYNLNa6Tr2cm4JKnirLNYfKRW4n9Q8w3-GgeZj_ev6qDgfuYTrJLNgGDvw64FGgxWa/exec";
+  // ============================================================
+
+  var form             = document.getElementById('apply-form');
+  var successPanel     = document.getElementById('success-panel');
+  var submitBtn        = document.getElementById('submit-btn');
+  var btnInner         = document.getElementById('btn-inner');
+  var sessionInput     = document.getElementById('session');
+  var noTimeCheckbox   = document.getElementById('no-time-checkbox');
+  var sessionReqStar   = document.getElementById('session-req-star');
+  var successNotice    = document.getElementById('success-notice-text');
+  var infoBoxWrapper   = document.getElementById('info-box-wrapper');
+  var dupModal         = document.getElementById('dup-modal');
 
   /* ── Validation rules ── */
-  const rules = {
-    name:    { required: true,  msg: '請輸入學生姓名' },
-    phone:   { required: true,  pattern: /^[\d\s\-+()]{7,20}$/, msg: '請輸入有效的電話號碼' },
-    email:   { required: true,  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, msg: '請輸入有效的電子郵件地址' },
-    survey:  { required: true,  minLen: 10, msg: '請填寫評估問卷內容（至少 10 字）' },
-    subsidy: { required: true,  min: 1, msg: '請輸入欲申請之補助金額（需大於 0）' },
-    budget:  { required: true,  min: 1, msg: '請輸入學生的理想預算（需大於 0）' },
-    session: { required: true,  msg: '請選擇說明會時間' },
+  var rules = {
+    name:    { required: true, msg: '請輸入學生姓名' },
+    phone:   { required: true, pattern: /^[\d\s\-+()]{7,20}$/, msg: '請輸入有效的電話號碼' },
+    email:   { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, msg: '請輸入有效的電子郵件地址' },
+    survey:  { required: true, minLen: 10, msg: '請填寫評估問卷內容（至少 10 字）' },
+    subsidy: { required: true, min: 1, msg: '請輸入欲申請之補助金額（需大於 0）' },
+    budget:  { required: true, min: 1, msg: '請輸入學生的理想預算（需大於 0）' },
+    session: { required: true, msg: '請選擇說明會時間' },
   };
 
   function validateField(id) {
     if (id === 'session' && noTimeCheckbox.checked) {
-      sessionInput.classList.remove('error');
-      const errEl = document.getElementById('session-err');
-      if (errEl) errEl.classList.remove('show');
+      document.getElementById('session').classList.remove('error');
+      var e = document.getElementById('session-err');
+      if (e) e.classList.remove('show');
       return true;
     }
-
-    const rule = rules[id];
+    var rule = rules[id];
     if (!rule) return true;
-    const el = document.getElementById(id);
-    const errEl = document.getElementById(id + '-err');
-    const val = el.value.trim();
+    var el   = document.getElementById(id);
+    var errEl = document.getElementById(id + '-err');
+    var val  = el.value.trim();
+    var valid = true;
+    var msg  = rule.msg;
 
-    let valid = true;
-    let msg = rule.msg;
-
-    if (rule.required && !val) { valid = false; }
-    else if (rule.pattern && !rule.pattern.test(val)) { valid = false; }
-    else if (rule.minLen && val.length < rule.minLen) { valid = false; msg = `請填寫評估問卷內容（至少 ${rule.minLen} 字）`; }
+    if (rule.required && !val)                                          { valid = false; }
+    else if (rule.pattern && !rule.pattern.test(val))                  { valid = false; }
+    else if (rule.minLen && val.length < rule.minLen)                  { valid = false; msg = '請填寫評估問卷內容（至少 ' + rule.minLen + ' 字）'; }
     else if (rule.min !== undefined && (parseFloat(val) < rule.min || isNaN(parseFloat(val)))) { valid = false; }
 
     el.classList.toggle('error', !valid);
-    if (errEl) {
-      errEl.textContent = msg;
-      errEl.classList.toggle('show', !valid);
-    }
+    if (errEl) { errEl.textContent = msg; errEl.classList.toggle('show', !valid); }
     return valid;
   }
 
-  /* 智慧勾選切換邏輯 */
+  /* Checkbox toggle */
   function handleCheckboxChange(e) {
     if (noTimeCheckbox.checked) {
       sessionInput.value = '';
       sessionInput.disabled = true;
       sessionInput.classList.remove('error');
-      const errEl = document.getElementById('session-err');
+      var errEl = document.getElementById('session-err');
       if (errEl) errEl.classList.remove('show');
       sessionReqStar.style.display = 'none';
     } else {
@@ -664,7 +463,6 @@
       sessionReqStar.style.display = 'inline';
     }
   }
-
   function toggleNoTimeOption(event) {
     if (event.target.tagName !== 'INPUT') {
       noTimeCheckbox.checked = !noTimeCheckbox.checked;
@@ -672,75 +470,116 @@
     }
   }
 
-  /* Live validation on blur */
-  Object.keys(rules).forEach(id => {
-    const el = document.getElementById(id);
+  /* Live validation */
+  Object.keys(rules).forEach(function(id) {
+    var el = document.getElementById(id);
     if (el) {
-      el.addEventListener('blur', () => validateField(id));
-      el.addEventListener('input', () => {
-        if (el.classList.contains('error')) validateField(id);
-      });
+      el.addEventListener('blur', function() { validateField(id); });
+      el.addEventListener('input', function() { if (el.classList.contains('error')) validateField(id); });
     }
   });
 
-  /* ── Submit handler ── */
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
+  /* ── Modal helpers ── */
+  function showModal() {
+    dupModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    dupModal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  dupModal.addEventListener('click', function(e) {
+    if (e.target === dupModal) closeModal();
+  });
 
-    const allValid = Object.keys(rules).map(id => validateField(id)).every(Boolean);
-    if (!allValid) {
-      const firstErr = form.querySelector('.error');
-      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-
-    /* 💡 動態抽換成功面板上的文字與高亮樣式 */
-    if (noTimeCheckbox.checked) {
-      // 勾選了後面三天皆不便 (加急件)
-      successNoticeText.innerHTML = `<strong>已收到補助申請通知</strong><br>此件將 30 分鐘內優先協助評估審核完成，並另行通知。`;
-      infoBoxWrapper.classList.add('priority-style'); // 加上加急高亮外框
+  /* ── Button: 傳送中 loading state ── */
+  function setLoading(on) {
+    if (on) {
+      submitBtn.disabled = true;
+      btnInner.innerHTML = '<span class="spinner"></span> 傳送中...';
     } else {
-      // 未勾選 (常規件)
-      successNoticeText.innerHTML = `<strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。`;
+      submitBtn.disabled = false;
+      btnInner.innerHTML = '<span class="btn-icon">🚀</span> 送出申請';
+    }
+  }
+
+  /* ── 顯示成功卡片 ── */
+  function showSuccess() {
+    var isPriority = noTimeCheckbox.checked;
+
+    if (isPriority) {
+      successNotice.innerHTML = '<strong>已收到補助申請通知</strong><br>此件將 30 分鐘內優先協助評估審核完成，並另行通知。';
+      infoBoxWrapper.classList.add('priority-style');
+    } else {
+      successNotice.innerHTML = '<strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。';
       infoBoxWrapper.classList.remove('priority-style');
     }
-
-    /* Collect data */
-    const payload = {
-      meta: {
-        submittedAt: new Date().toISOString(),
-        system: 'AI未來學院 AI-GO適才科技補助申請系統',
-        version: '2.1.0'
-      },
-      student: {
-        name:    document.getElementById('name').value.trim(),
-        phone:   document.getElementById('phone').value.trim(),
-        email:   document.getElementById('email').value.trim(),
-        survey:  document.getElementById('survey').value.trim(),
-      },
-      subsidy: {
-        appliedAmount: parseFloat(document.getElementById('subsidy').value) || 0,
-        idealBudget:   parseFloat(document.getElementById('budget').value) || 0,
-      },
-      schedule: {
-        sessionDatetime: noTimeCheckbox.checked ? "僅能安排今日（後面三天不便）" : sessionInput.value,
-      },
-      extra: {
-        notes: document.getElementById('notes').value.trim() || null,
-      }
-    };
-
-    console.log('📦 補助申請資料 (API Payload):', JSON.stringify(payload, null, 2));
 
     form.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
     form.style.opacity = '0';
     form.style.transform = 'translateY(10px)';
 
-    setTimeout(() => {
+    setTimeout(function() {
       form.style.display = 'none';
       successPanel.style.display = 'block';
       successPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 420);
+  }
+
+  /* ── Submit handler (含 Fetch to GAS) ── */
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var allValid = Object.keys(rules).map(function(id) { return validateField(id); }).every(Boolean);
+    if (!allValid) {
+      var firstErr = form.querySelector('.error');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var payload = {
+      name:    document.getElementById('name').value.trim(),
+      phone:   document.getElementById('phone').value.trim(),
+      email:   document.getElementById('email').value.trim(),
+      survey:  document.getElementById('survey').value.trim(),
+      subsidy: parseFloat(document.getElementById('subsidy').value) || 0,
+      budget:  parseFloat(document.getElementById('budget').value) || 0,
+      session: noTimeCheckbox.checked ? '僅能安排今日（後面三天不便）' : sessionInput.value,
+      notes:   document.getElementById('notes').value.trim() || null,
+      isPriority: noTimeCheckbox.checked
+    };
+
+    console.log('📦 送出 Payload：', JSON.stringify(payload, null, 2));
+
+    setLoading(true);
+
+    fetch(GAS_URL, {
+      method: 'POST',
+      // GAS 不支援 application/json 的 preflight，改用 text/plain 繞過 CORS preflight
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP 錯誤：' + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      console.log('✅ GAS 回應：', data);
+      setLoading(false);
+
+      if (data.status === 'duplicate') {
+        showModal();
+      } else if (data.status === 'success') {
+        showSuccess();
+      } else {
+        alert('發生錯誤：' + (data.message || '未知錯誤，請稍後再試。'));
+      }
+    })
+    .catch(function(err) {
+      console.error('❌ Fetch 失敗：', err);
+      setLoading(false);
+      alert('無法連接到伺服器，請確認網路狀態後再試。\n\n錯誤詳情：' + err.message);
+    });
   });
 
   /* ── Reset ── */
@@ -748,32 +587,31 @@
     form.reset();
     sessionInput.disabled = false;
     sessionReqStar.style.display = 'inline';
-    infoBoxWrapper.classList.remove('priority-style'); // 重設時移除加急樣式
-    form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-    form.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+    infoBoxWrapper.classList.remove('priority-style');
+    form.querySelectorAll('.error').forEach(function(el) { el.classList.remove('error'); });
+    form.querySelectorAll('.error-msg').forEach(function(el) { el.classList.remove('show'); });
     form.style.display = '';
     form.style.opacity = '0';
     form.style.transform = 'translateY(10px)';
-
     successPanel.style.display = 'none';
+    setLoading(false);
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(function() {
       form.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
       form.style.opacity = '1';
       form.style.transform = 'translateY(0)';
     });
-
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /* ── Page load stagger ── */
-  window.addEventListener('DOMContentLoaded', () => {
-    const fields = document.querySelectorAll('.field');
-    fields.forEach((el, i) => {
+  window.addEventListener('DOMContentLoaded', function() {
+    var fields = document.querySelectorAll('.field');
+    fields.forEach(function(el, i) {
       el.style.opacity = '0';
       el.style.transform = 'translateY(14px)';
-      el.style.transition = `opacity 0.45s ease ${0.05 * i + 0.4}s, transform 0.45s ease ${0.05 * i + 0.4}s`;
-      requestAnimationFrame(() => {
+      el.style.transition = 'opacity 0.45s ease ' + (0.05 * i + 0.4) + 's, transform 0.45s ease ' + (0.05 * i + 0.4) + 's';
+      requestAnimationFrame(function() {
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
       });
