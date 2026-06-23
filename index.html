@@ -355,7 +355,7 @@
           <span class="error-msg" id="session-err">請選擇說明會時間</span>
           <div class="checkbox-field" onclick="toggleNoTimeOption(event)">
             <input type="checkbox" id="no-time-checkbox" onchange="handleCheckboxChange(event)">
-            <label for="no-time-checkbox" class="checkbox-label">後面三天皆不便僅能安排今日</label>
+            <label for="no-time-checkbox" class="checkbox-label">想要把握AI時代紅利，今天可以完成報名</label>
           </div>
         </div>
 
@@ -544,7 +544,7 @@
       survey:  document.getElementById('survey').value.trim(),
       subsidy: parseFloat(document.getElementById('subsidy').value) || 0,
       budget:  parseFloat(document.getElementById('budget').value) || 0,
-      session: noTimeCheckbox.checked ? '僅能安排今日（後面三天不便）' : sessionInput.value,
+      session: noTimeCheckbox.checked ? '想要把握AI時代紅利，今天可以完成報名' : sessionInput.value,
       notes:   document.getElementById('notes').value.trim() || null,
       isPriority: noTimeCheckbox.checked
     };
