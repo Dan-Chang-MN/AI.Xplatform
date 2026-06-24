@@ -347,12 +347,12 @@
           <span class="error-msg" id="budget-err">請輸入學生的理想預算（需大於 0）</span>
         </div>
 
-        <div class="section-label"><span>04 · 說明會排程</span></div>
+        <div class="section-label"><span>04 · 報名排程</span></div>
 
         <div class="field full">
-          <label for="session">第二階段說明會時間 <span class="req" id="session-req-star">*</span></label>
+          <label for="session">預計報名時間 <span class="req" id="session-req-star">*</span></label>
           <input type="datetime-local" id="session" name="session">
-          <span class="error-msg" id="session-err">請選擇說明會時間</span>
+          <span class="error-msg" id="session-err">請選擇預計報名時間</span>
           <div class="checkbox-field" onclick="toggleNoTimeOption(event)">
             <input type="checkbox" id="no-time-checkbox" onchange="handleCheckboxChange(event)">
             <label for="no-time-checkbox" class="checkbox-label">想要把握AI時代紅利，今天可以完成報名</label>
@@ -421,7 +421,7 @@
     survey:  { required: true, minLen: 10, msg: '請填寫評估問卷內容（至少 10 字）' },
     subsidy: { required: true, min: 1, msg: '請輸入欲申請之補助金額（需大於 0）' },
     budget:  { required: true, min: 1, msg: '請輸入學生的理想預算（需大於 0）' },
-    session: { required: true, msg: '請選擇說明會時間' },
+    session: { required: true, msg: '請選擇預計報名時間' },
   };
 
   function validateField(id) {
@@ -508,7 +508,7 @@
     var isPriority = noTimeCheckbox.checked;
 
     if (isPriority) {
-      successNotice.innerHTML = '<strong>已收到補助申請通知</strong><br>此件將 30 分鐘內優先協助評估審核完成，並另行通知。';
+      successNotice.innerHTML = '<strong>已收到補助申請通知</strong><br>此件將 15 分鐘內優先協助評估審核完成，並另行通知。';
       infoBoxWrapper.classList.add('priority-style');
     } else {
       successNotice.innerHTML = '<strong>已收到補助申請通知</strong><br>我們將在 24 小時內完成審核評估，並另行通知。';
